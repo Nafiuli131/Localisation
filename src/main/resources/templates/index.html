@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Localization Demo</title>
+</head>
+<body>
+<h1 th:text="${greeting}">Hello, World!</h1>
+<select id="languageSelector">
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+    <!-- Add options for other languages -->
+</select>
+<script>
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            fetch('/updateLocale?lang=' + selectedLanguage)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    document.querySelector('h1').textContent = data.greeting;
+                });
+        });
+    </script>
+</body>
+</html>
